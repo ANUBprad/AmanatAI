@@ -14,7 +14,6 @@ import {
   AlertTriangle,
   Download,
   Share2,
-  ArrowLeft,
   FileText,
   Calendar,
   MapPin,
@@ -29,6 +28,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
+import { AppHeader } from "@/components/app-header"
 
 interface VerificationData {
   id: string
@@ -191,49 +191,33 @@ export default function ResultsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      {/* Header */}
-      <header className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/upload">
-              <Button variant="ghost" size="sm">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Upload
-              </Button>
-            </Link>
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Shield className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Verification Results</h1>
-                <p className="text-xs text-muted-foreground">ID: {data.verification.verificationId}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={downloadReport}>
-              <Download className="h-4 w-4 mr-2" />
-              Download Report
-            </Button>
-            <Button variant="outline" size="sm">
-              <Share2 className="h-4 w-4 mr-2" />
-              Share
-            </Button>
-          </div>
-        </div>
-      </header>
+      <AppHeader
+        title="Verification Results"
+        subtitle={`ID: ${data.verification.verificationId}`}
+        showBackButton={true}
+        backHref="/upload"
+      />
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Status Overview */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="mb-8"
           >
+            <div className="flex justify-end gap-2 mb-4">
+              <Button variant="outline" size="sm" onClick={downloadReport}>
+                <Download className="h-4 w-4 mr-2" />
+                Download Report
+              </Button>
+              <Button variant="outline" size="sm">
+                <Share2 className="h-4 w-4 mr-2" />
+                Share
+              </Button>
+            </div>
+
+            {/* Status Overview */}
             <Card className="p-8">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
@@ -287,201 +271,199 @@ export default function ResultsPage() {
             </Card>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Extracted Information */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Card className="p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                    <FileText className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">Extracted Information</h3>
+          {/* Extracted Information */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Card className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                  <FileText className="h-5 w-5 text-primary" />
                 </div>
+                <h3 className="text-xl font-semibold text-foreground">Extracted Information</h3>
+              </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <User className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Full Name</p>
-                      <p className="font-medium text-foreground">{data.extractedData.name}</p>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  <div className="flex items-center gap-3">
-                    <Hash className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">ID Number</p>
-                      <p className="font-medium text-foreground font-mono">{data.extractedData.idNumber}</p>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  <div className="flex items-center gap-3">
-                    <Building className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Issuing Authority</p>
-                      <p className="font-medium text-foreground">{data.extractedData.issuingAuthority}</p>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  <div className="flex items-center gap-3">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Issue Date</p>
-                      <p className="font-medium text-foreground">
-                        {new Date(data.extractedData.dateOfIssue).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  <div className="flex items-center gap-3">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Expiry Date</p>
-                      <p className="font-medium text-foreground">
-                        {new Date(data.extractedData.dateOfExpiry).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  <div className="flex items-start gap-3">
-                    <MapPin className="h-4 w-4 text-muted-foreground mt-1" />
-                    <div>
-                      <p className="text-sm text-muted-foreground">Address</p>
-                      <p className="font-medium text-foreground">{data.extractedData.address}</p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
-
-            {/* Security Analysis */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="space-y-6"
-            >
-              {/* Security Features */}
-              <Card className="p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                    <Lock className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">Security Features</h3>
-                </div>
-
-                <div className="space-y-4">
-                  {Object.entries(data.verification.securityFeatures).map(([feature, detected]) => (
-                    <div key={feature} className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        {detected ? (
-                          <CheckCircle className="h-4 w-4 text-accent" />
-                        ) : (
-                          <XCircle className="h-4 w-4 text-muted-foreground" />
-                        )}
-                        <span className="text-foreground capitalize">{feature.replace(/([A-Z])/g, " $1").trim()}</span>
-                      </div>
-                      <Badge variant={detected ? "default" : "outline"} className={detected ? "bg-accent" : ""}>
-                        {detected ? "Detected" : "Not Found"}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-
-              {/* Risk Assessment */}
-              <Card className="p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                    <Star className="h-5 w-5 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground">Risk Assessment</h3>
-                </div>
-
-                <div className="space-y-4">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <User className="h-4 w-4 text-muted-foreground" />
                   <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">Risk Score</span>
-                      <span className={`font-semibold ${riskLevel.color}`}>
-                        {(data.verification.riskScore * 100).toFixed(1)}%
-                      </span>
-                    </div>
-                    <Progress
-                      value={data.verification.riskScore * 100}
-                      className="h-2"
-                      // @ts-ignore
-                      style={{
-                        "--progress-background":
-                          data.verification.riskScore < 0.3
-                            ? "hsl(var(--accent))"
-                            : data.verification.riskScore < 0.7
-                              ? "hsl(45 93% 47%)"
-                              : "hsl(var(--destructive))",
-                      }}
-                    />
+                    <p className="text-sm text-muted-foreground">Full Name</p>
+                    <p className="font-medium text-foreground">{data.extractedData.name}</p>
                   </div>
+                </div>
 
-                  <div className="p-4 rounded-lg bg-muted/50">
-                    <h4 className="font-semibold text-foreground mb-2">Assessment Summary</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {data.verification.riskScore < 0.3 &&
-                        "This document shows strong indicators of authenticity with minimal risk factors detected."}
-                      {data.verification.riskScore >= 0.3 &&
-                        data.verification.riskScore < 0.7 &&
-                        "This document shows some risk factors that require additional verification."}
-                      {data.verification.riskScore >= 0.7 &&
-                        "This document shows significant risk factors and may require manual review."}
+                <Separator />
+
+                <div className="flex items-center gap-3">
+                  <Hash className="h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">ID Number</p>
+                    <p className="font-medium text-foreground font-mono">{data.extractedData.idNumber}</p>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center gap-3">
+                  <Building className="h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Issuing Authority</p>
+                    <p className="font-medium text-foreground">{data.extractedData.issuingAuthority}</p>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center gap-3">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Issue Date</p>
+                    <p className="font-medium text-foreground">
+                      {new Date(data.extractedData.dateOfIssue).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
-              </Card>
 
-              {/* Verification Details */}
-              <Card className="p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                    <Clock className="h-5 w-5 text-primary" />
+                <Separator />
+
+                <div className="flex items-center gap-3">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Expiry Date</p>
+                    <p className="font-medium text-foreground">
+                      {new Date(data.extractedData.dateOfExpiry).toLocaleDateString()}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-semibold text-foreground">Verification Details</h3>
                 </div>
 
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Verification ID</span>
-                    <span className="font-mono text-foreground">{data.verification.verificationId}</span>
+                <Separator />
+
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-4 w-4 text-muted-foreground mt-1" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Address</p>
+                    <p className="font-medium text-foreground">{data.extractedData.address}</p>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Timestamp</span>
-                    <span className="text-foreground">
-                      {new Date(data.verification.verificationTimestamp).toLocaleString()}
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+
+          {/* Security Analysis */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="space-y-6"
+          >
+            {/* Security Features */}
+            <Card className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                  <Lock className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Security Features</h3>
+              </div>
+
+              <div className="space-y-4">
+                {Object.entries(data.verification.securityFeatures).map(([feature, detected]) => (
+                  <div key={feature} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      {detected ? (
+                        <CheckCircle className="h-4 w-4 text-accent" />
+                      ) : (
+                        <XCircle className="h-4 w-4 text-muted-foreground" />
+                      )}
+                      <span className="text-foreground capitalize">{feature.replace(/([A-Z])/g, " $1").trim()}</span>
+                    </div>
+                    <Badge variant={detected ? "default" : "outline"} className={detected ? "bg-accent" : ""}>
+                      {detected ? "Detected" : "Not Found"}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            {/* Risk Assessment */}
+            <Card className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                  <Star className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Risk Assessment</h3>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-muted-foreground">Risk Score</span>
+                    <span className={`font-semibold ${riskLevel.color}`}>
+                      {(data.verification.riskScore * 100).toFixed(1)}%
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Document Type</span>
-                    <span className="text-foreground">{data.extractedData.documentType}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">File Name</span>
-                    <span className="text-foreground">{data.fileName}</span>
-                  </div>
+                  <Progress
+                    value={data.verification.riskScore * 100}
+                    className="h-2"
+                    // @ts-ignore
+                    style={{
+                      "--progress-background":
+                        data.verification.riskScore < 0.3
+                          ? "hsl(var(--accent))"
+                          : data.verification.riskScore < 0.7
+                            ? "hsl(45 93% 47%)"
+                            : "hsl(var(--destructive))",
+                    }}
+                  />
                 </div>
-              </Card>
-            </motion.div>
-          </div>
+
+                <div className="p-4 rounded-lg bg-muted/50">
+                  <h4 className="font-semibold text-foreground mb-2">Assessment Summary</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {data.verification.riskScore < 0.3 &&
+                      "This document shows strong indicators of authenticity with minimal risk factors detected."}
+                    {data.verification.riskScore >= 0.3 &&
+                      data.verification.riskScore < 0.7 &&
+                      "This document shows some risk factors that require additional verification."}
+                    {data.verification.riskScore >= 0.7 &&
+                      "This document shows significant risk factors and may require manual review."}
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Verification Details */}
+            <Card className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
+                  <Clock className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Verification Details</h3>
+              </div>
+
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Verification ID</span>
+                  <span className="font-mono text-foreground">{data.verification.verificationId}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Timestamp</span>
+                  <span className="text-foreground">
+                    {new Date(data.verification.verificationTimestamp).toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Document Type</span>
+                  <span className="text-foreground">{data.extractedData.documentType}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">File Name</span>
+                  <span className="text-foreground">{data.fileName}</span>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
 
           {/* Action Buttons */}
           <motion.div

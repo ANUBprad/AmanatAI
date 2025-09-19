@@ -4,21 +4,8 @@ import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Shield,
-  Lock,
-  Eye,
-  Server,
-  Key,
-  FileCheck,
-  AlertTriangle,
-  CheckCircle,
-  ArrowLeft,
-  Zap,
-  Globe,
-  Clock,
-} from "lucide-react"
-import Link from "next/link"
+import { Shield, Lock, Eye, Server, Key, FileCheck, AlertTriangle, CheckCircle, Zap, Globe, Clock } from "lucide-react"
+import { AppHeader } from "@/components/app-header"
 
 const securityFeatures = [
   {
@@ -112,28 +99,7 @@ const securityMetrics = [
 export default function SecurityPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      {/* Header */}
-      <header className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/">
-              <Button variant="ghost" size="sm">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
-              </Button>
-            </Link>
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                <Shield className="h-6 w-6 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Security & Privacy</h1>
-                <p className="text-xs text-muted-foreground">Government-Grade Protection</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AppHeader title="Security & Privacy" subtitle="Government-Grade Protection" showBackButton={true} backHref="/" />
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
