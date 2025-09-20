@@ -1,30 +1,48 @@
-# AI document verification
+AmanatAI – AI-Powered Document Verification Platform
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Description:
+AmanatAI is an AI-enabled platform designed to simplify and automate document verification. The application provides a user-friendly interface for uploading documents, tracking verification status, and validating identities using OTP-based flows. Built with Next.js, React, and Tailwind CSS, it is fully deployable on Vercel and designed to integrate seamlessly with AI-powered OCR and verification APIs. AmanatAI is ideal for fintech, edtech, HR tech, and enterprise applications that require fast, secure, and scalable document verification.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/pradhananubhab25-4541s-projects/v0-ai-document-verification)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/D6KpJhE8FIS)
+Features
 
-## Overview
+Multi-Document Upload: Supports various IDs and certificates.
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+Real-Time Status Tracking: View verification progress instantly.
 
-## Deployment
+OTP Verification: Secure identity confirmation via one-time passwords.
 
-Your project is live at:
+AI/ML Integration Ready: Easily connect with OCR and AI verification APIs.
 
-**[https://vercel.com/pradhananubhab25-4541s-projects/v0-ai-document-verification](https://vercel.com/pradhananubhab25-4541s-projects/v0-ai-document-verification)**
+Responsive UI: Clean, modern interface optimized for web and mobile.
 
-## Build your app
+Vercel Deployment: Easy hosting and scalability.
 
-Continue building your app on:
+Tech Stack
 
-**[https://v0.app/chat/projects/D6KpJhE8FIS](https://v0.app/chat/projects/D6KpJhE8FIS)**
+Frontend: Next.js, React, Tailwind CSS
 
-## How It Works
+Deployment: Vercel
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+Potential Backend/Integration: Node.js/Express, MongoDB/PostgreSQL, Twilio/Firebase Auth, AI OCR services (Google Vision, AWS Textract, Tesseract)
+
+Use Cases
+
+Fintech: KYC/AML compliance
+
+Edtech: Student ID and certificate verification
+
+Enterprise HR: Employee document onboarding
+
+Government/NGO: Identity verification for services
+
+Future Scope
+
+Fully integrated AI/ML document verification pipeline
+
+Blockchain-based verification for immutable document records
+
+Multi-language OCR for global use
+
+Mobile app integration for on-the-go verification
+
+Advanced fraud detection and anti-spoofing features
