@@ -77,7 +77,25 @@ export async function POST(request: NextRequest) {
     // Check if PDF is password protected
     let isPasswordProtected = false
     if (file.type === "application/pdf") {
-      isPasswordProtected = buffer.includes(Buffer.from("/Encrypt"))
+      // More accurate password protection detection
+      // Check for specific PDF encryption markers and user/owner password flags
+      const pdfContent = buffer.toString("binary")
+
+      // Look for encryption dictionary and user password requirements
+      const hasEncryptDict = pdfContent.includes("/Encrypt")
+      const hasUserPassword = pdfContent.includes("/U ") || pdfContent.includes("/UE ")
+      const hasOwnerPassword = pdfContent.includes("/O ") || pdfContent.includes("/OE ")
+
+      // Only consider it password protected if it has encryption AND user/owner password entries
+      isPasswordProtected = hasEncryptDict && (hasUserPassword || hasOwnerPassword)
+
+      // Additional check: try to detect if the PDF actually requires a password to open
+      // This is a more conservative approach - only require password if we're confident it's needed
+      if (isPasswordProtected) {
+        // Check if the PDF has content that suggests it's actually encrypted
+        const hasEncryptedContent = pdfContent.includes("/Filter") && pdfContent.includes("/Length")
+        isPasswordProtected = hasEncryptedContent
+      }
 
       if (isPasswordProtected && !password) {
         AuditLogger.log({
